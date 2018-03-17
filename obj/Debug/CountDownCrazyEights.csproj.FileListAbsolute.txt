@@ -1,0 +1,17 @@
+C:\Users\Kalen\Documents\CountdownCrazyEights\ConsoleApp1\bin\Debug\ConsoleApp1.exe.config
+C:\Users\Kalen\Documents\CountdownCrazyEights\ConsoleApp1\bin\Debug\ConsoleApp1.exe
+C:\Users\Kalen\Documents\CountdownCrazyEights\ConsoleApp1\bin\Debug\ConsoleApp1.pdb
+C:\Users\Kalen\Documents\CountdownCrazyEights\ConsoleApp1\obj\Debug\ConsoleApp1.exe
+C:\Users\Kalen\Documents\CountdownCrazyEights\ConsoleApp1\obj\Debug\ConsoleApp1.pdb
+C:\Users\Kalen\Documents\CountdownCrazyEights\ConsoleApp1\obj\Debug\CountDownCrazyEights.csprojResolveAssemblyReference.cache
+E:\Users\Yolanda\Documents\VS Projects\csharp_countdowncrazyeights-master\bin\Debug\ConsoleApp1.exe.config
+E:\Users\Yolanda\Documents\VS Projects\csharp_countdowncrazyeights-master\bin\Debug\ConsoleApp1.exe
+E:\Users\Yolanda\Documents\VS Projects\csharp_countdowncrazyeights-master\bin\Debug\ConsoleApp1.pdb
+E:\Users\Yolanda\Documents\VS Projects\csharp_countdowncrazyeights-master\obj\Debug\CountDownCrazyEights.csprojResolveAssemblyReference.cache
+E:\Users\Yolanda\Documents\VS Projects\csharp_countdowncrazyeights-master\obj\Debug\CountDownCrazyEights.csproj.CoreCompileInputs.cache
+E:\Users\Yolanda\Documents\VS Projects\csharp_countdowncrazyeights-master\obj\Debug\ConsoleApp1.exe
+E:\Users\Yolanda\Documents\VS Projects\csharp_countdowncrazyeights-master\obj\Debug\ConsoleApp1.pdb
+E:\Users\Yolanda\Documents\VS Projects\csharp_countdowncrazyeights-master\obj\Debug\ConsoleApp1.GameForm.resources
+E:\Users\Yolanda\Documents\VS Projects\csharp_countdowncrazyeights-master\obj\Debug\CountDownCrazyEights.csproj.GenerateResource.Cache
+E:\Users\Yolanda\Documents\VS Projects\csharp_countdowncrazyeights-master\obj\Debug\ConsoleApp1.InitialForm.resources
+E:\Users\Yolanda\Documents\VS Projects\csharp_countdowncrazyeights-master\obj\Debug\ConsoleApp1.Properties.Resources.resources

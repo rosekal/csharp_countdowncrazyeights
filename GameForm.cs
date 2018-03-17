@@ -1,0 +1,147 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Windows.Forms;
+
+namespace ConsoleApp1 {
+    public partial class GameForm : Form {
+        private string[] compNames = { "Matt", "Nate", "Arthur" };
+        private List<Player> players = new List<Player>();
+        private bool gameFinished = false;
+
+        //deck is where the player picks up cards, the pile refers to all cards that were placed down (last index is 'flipped up')
+        private static List<Card> pile = new List<Card>();
+        private static List<Card> deck = new List<Card>();
+
+        internal static List<Card> Pile { get => pile; set => pile = value; }
+        internal static List<Card> Deck { get => deck; set => deck = value; }
+
+        public GameForm() {
+            InitializeComponent();
+        }
+
+        private void GameForm_Load(object sender, EventArgs e) {
+            string name = InitialForm.name;
+            byte numOfPlayers = InitialForm.numOfPlayers;
+
+            switch (numOfPlayers) {
+                case 3:
+                    gxPlayer3.Visible = true;
+                    break;
+                case 4:
+                    gxPlayer3.Visible = true;
+                    gxPlayer4.Visible = true;
+                    break;
+            }
+
+            SetUp(name, numOfPlayers);
+
+            int twosMultiplier = 1;
+            bool firstRound = true, jack = false;
+            string wildSuit = null;
+
+            //The game in a do-while loop, ends when there is no more cards in the current player's hand
+            do {
+                foreach (Player currentPlayer in players) {
+                    Card currentCard = Pile.Last();
+                    Console.WriteLine(currentCard.GetImageFile());
+                    pbCurrentCard.Image = (System.Drawing.Image) Properties.Resources.ResourceManager.GetObject(currentCard.GetImageFile());
+
+                    if (Deck.Count == 8) {
+                        Console.WriteLine("Shuffling...");
+                        Deck = Pile.ToList();
+                        Shuffle();
+                    }
+
+                    //If it's the first round, don't check the special conditions.
+                    if (!firstRound) {
+                        //If previous person throws down a rank of 2, the next person has to pick up.  Sequential 2's will increment the pick up by 2 
+                        if (currentCard.RankID == 2)
+                            currentPlayer.PickUp(2 * twosMultiplier++);
+                        else
+                            twosMultiplier = 1;
+
+                        if (currentCard.RankID == 11 && !jack) {
+                            Console.WriteLine($"{currentPlayer.Name} has missed their turn.");
+                            jack = true;
+                            continue;
+                        }
+                        else
+                            jack = false;
+
+                        if (currentCard.RankID == 12 && String.Equals(currentCard.Suit, "Spades"))
+                            currentPlayer.PickUp(5);
+
+                    }
+                    else
+                        firstRound = false;
+
+                    //pile.Last() is the 'flipped up' card, where the player needs to match a suit or rank with it (or place a wild card
+                    Console.WriteLine($"\nIt's {currentPlayer.Name}'s turn.  The current card is: {currentCard} {(wildSuit != null ? $" (Follow suit: {wildSuit})" : "")}  With {currentPlayer.GetNumberInHand()} cards");
+
+                    Thread.Sleep(1000);
+
+                    //Go to the overriden ThrowDown method within either Human.cs or Computer.cs and pass the current card object
+                    //If the previous card wasn't a wild suit (ThrowDown returns a string if true), pass the literal card values.
+                    if (wildSuit == null)
+                        wildSuit = currentPlayer.ThrowDown(currentCard);
+                    else
+                        wildSuit = currentPlayer.ThrowDown(currentCard, wildSuit);
+
+                    if (currentPlayer.GetNumberInHand() == 0) {
+                        gameFinished = true;
+                        Console.WriteLine($"And the game is over! {currentPlayer.Name} is the winner!");
+                        break;
+                    }
+                }
+            } while (!gameFinished);
+
+            Console.ReadLine();
+        }
+
+        //This method sets up all the necessary attributes before starting the game
+        void SetUp(string humanName, byte numOfPlayers) {
+            PopulateCards();
+            Shuffle();
+
+            List<GroupBox> gbx = new List<GroupBox> { gxPlayer2, gxPlayer3, gxPlayer4 };
+
+            for (int i = 0; i < numOfPlayers; i++) {
+                if (i == 0) 
+                    players.Add(new Human(humanName, gxPlayer1));
+                else
+                    players.Add(new Computer(compNames[i - 1], gbx[i-1]));
+            }
+
+            Pile.Add(Deck.First());
+            Deck.RemoveAt(0);
+
+        }
+
+        //This method shuffles the deck using the Random class
+        public void Shuffle() {
+            Random rng = new Random();
+            byte n = (byte)Deck.Count;
+
+            while (n > 1) {
+                n--;
+                byte k = (byte)rng.Next(n + 1);
+                Card tmp = Deck[k];
+                Deck[k] = Deck[n];
+                Deck[n] = tmp;
+            }
+        }
+
+
+        //This method adds 52 card objects to the 'deck' list, using a for loop within a for loop and string arrays
+        void PopulateCards() {
+            string[] suits = { "Spades", "Clubs", "Hearts", "Diamonds" },
+                     ranks = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace" };
+            for (int i = 0; i < 4; i++)
+                for (int j = 0; j < 13; j++) {
+                    Deck.Add(new Card(ranks[j], suits[i]));
+                }
+        }
+    }
+}
