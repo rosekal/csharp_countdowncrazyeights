@@ -45,11 +45,11 @@ namespace ConsoleApp1 {
             do {
                 foreach (Player currentPlayer in players) {
                     Card currentCard = Pile.Last();
-                    Console.WriteLine(currentCard.GetImageFile());
-                    pbCurrentCard.Image = (System.Drawing.Image) Properties.Resources.ResourceManager.GetObject(currentCard.GetImageFile());
+                    pbCurrentCard.Image = (System.Drawing.Image) Properties.Resources.ResourceManager
+                        .GetObject(currentCard.GetImageFile());
 
                     if (Deck.Count == 8) {
-                        Console.WriteLine("Shuffling...");
+                        lblMessage.Text = "Shuffling...";
                         Deck = Pile.ToList();
                         Shuffle();
                     }
@@ -63,7 +63,7 @@ namespace ConsoleApp1 {
                             twosMultiplier = 1;
 
                         if (currentCard.RankID == 11 && !jack) {
-                            Console.WriteLine($"{currentPlayer.Name} has missed their turn.");
+                            lblMessage.Text = $"{currentPlayer.Name} has missed their turn.";
                             jack = true;
                             continue;
                         }
@@ -78,7 +78,7 @@ namespace ConsoleApp1 {
                         firstRound = false;
 
                     //pile.Last() is the 'flipped up' card, where the player needs to match a suit or rank with it (or place a wild card
-                    Console.WriteLine($"\nIt's {currentPlayer.Name}'s turn.  The current card is: {currentCard} {(wildSuit != null ? $" (Follow suit: {wildSuit})" : "")}  With {currentPlayer.GetNumberInHand()} cards");
+                    lblMessage.Text = $"\nIt's {currentPlayer.Name}'s turn. {(wildSuit != null ? $" (Follow suit: {wildSuit})" : "")}";
 
                     Thread.Sleep(1000);
 
@@ -91,7 +91,7 @@ namespace ConsoleApp1 {
 
                     if (currentPlayer.GetNumberInHand() == 0) {
                         gameFinished = true;
-                        Console.WriteLine($"And the game is over! {currentPlayer.Name} is the winner!");
+                        lblMessage.Text = $"And the game is over! {currentPlayer.Name} is the winner!";
                         break;
                     }
                 }
@@ -142,6 +142,14 @@ namespace ConsoleApp1 {
                 for (int j = 0; j < 13; j++) {
                     Deck.Add(new Card(ranks[j], suits[i]));
                 }
+        }
+
+        private void LoadCards(Player player) {
+            if(player is Human) {
+                
+            }else if(player is Computer) {
+
+            }
         }
     }
 }

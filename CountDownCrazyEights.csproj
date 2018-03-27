@@ -130,6 +130,7 @@
     <Content Include="imgs\Ace_Diamonds.jpg" />
     <Content Include="imgs\Ace_Hearts.jpg" />
     <Content Include="imgs\Ace_Spades.jpg" />
+    <None Include="imgs\blue_back.jpg" />
     <Content Include="imgs\Jack_Clubs.jpg" />
     <Content Include="imgs\Jack_Diamonds.jpg" />
     <Content Include="imgs\Jack_Hearts.jpg" />

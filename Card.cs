@@ -1,4 +1,6 @@
-﻿namespace ConsoleApp1{
+﻿using System.Drawing;
+
+namespace ConsoleApp1{
     class Card {
         public string Suit { get; set; }
         public string Rank { get; set; }
@@ -32,8 +34,8 @@
             }
         }
 
-        public string GetImageFile() {
-            return $"{(RankID <= 10 ? "_" : "") + this.Rank}_{this.Suit}";
+        public Image GetImageFile() {
+            return (Image) Properties.Resources.ResourceManager.GetObject($"{(RankID <= 10 ? "_" : "") + this.Rank}_{this.Suit}");
         }
 
         public override string ToString() {

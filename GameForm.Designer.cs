@@ -27,15 +27,19 @@
             this.gxPlayer2 = new System.Windows.Forms.GroupBox();
             this.gxPlayer3 = new System.Windows.Forms.GroupBox();
             this.gxPlayer4 = new System.Windows.Forms.GroupBox();
+            this.lblCurrentCard = new System.Windows.Forms.Label();
             this.pbCurrentCard = new System.Windows.Forms.PictureBox();
+            this.pbPile = new System.Windows.Forms.PictureBox();
+            this.lblMessage = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbCurrentCard)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPile)).BeginInit();
             this.SuspendLayout();
             // 
             // gxPlayer1
             // 
-            this.gxPlayer1.Location = new System.Drawing.Point(328, 403);
+            this.gxPlayer1.Location = new System.Drawing.Point(248, 416);
             this.gxPlayer1.Name = "gxPlayer1";
-            this.gxPlayer1.Size = new System.Drawing.Size(148, 117);
+            this.gxPlayer1.Size = new System.Drawing.Size(288, 104);
             this.gxPlayer1.TabIndex = 0;
             this.gxPlayer1.TabStop = false;
             // 
@@ -65,20 +69,51 @@
             this.gxPlayer4.TabStop = false;
             this.gxPlayer4.Visible = false;
             // 
+            // lblCurrentCard
+            // 
+            this.lblCurrentCard.AutoSize = true;
+            this.lblCurrentCard.Location = new System.Drawing.Point(260, 220);
+            this.lblCurrentCard.Name = "lblCurrentCard";
+            this.lblCurrentCard.Size = new System.Drawing.Size(68, 13);
+            this.lblCurrentCard.TabIndex = 4;
+            this.lblCurrentCard.Text = "Current card:";
+            // 
             // pbCurrentCard
             // 
-            this.pbCurrentCard.Location = new System.Drawing.Point(242, 215);
+            this.pbCurrentCard.Location = new System.Drawing.Point(248, 236);
             this.pbCurrentCard.Name = "pbCurrentCard";
-            this.pbCurrentCard.Size = new System.Drawing.Size(118, 156);
+            this.pbCurrentCard.Size = new System.Drawing.Size(102, 156);
             this.pbCurrentCard.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbCurrentCard.TabIndex = 3;
             this.pbCurrentCard.TabStop = false;
+            // 
+            // pbPile
+            // 
+            this.pbPile.Image = global::ConsoleApp1.Properties.Resources.blue_back;
+            this.pbPile.Location = new System.Drawing.Point(434, 236);
+            this.pbPile.Name = "pbPile";
+            this.pbPile.Size = new System.Drawing.Size(102, 156);
+            this.pbPile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbPile.TabIndex = 5;
+            this.pbPile.TabStop = false;
+            // 
+            // lblMessage
+            // 
+            this.lblMessage.AutoSize = true;
+            this.lblMessage.Location = new System.Drawing.Point(374, 151);
+            this.lblMessage.Name = "lblMessage";
+            this.lblMessage.Size = new System.Drawing.Size(35, 13);
+            this.lblMessage.TabIndex = 6;
+            this.lblMessage.Text = "label1";
             // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(758, 532);
+            this.Controls.Add(this.lblMessage);
+            this.Controls.Add(this.pbPile);
+            this.Controls.Add(this.lblCurrentCard);
             this.Controls.Add(this.pbCurrentCard);
             this.Controls.Add(this.gxPlayer4);
             this.Controls.Add(this.gxPlayer3);
@@ -88,7 +123,9 @@
             this.Text = "GameForm";
             this.Load += new System.EventHandler(this.GameForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbCurrentCard)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPile)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -99,5 +136,8 @@
         private System.Windows.Forms.GroupBox gxPlayer3;
         private System.Windows.Forms.GroupBox gxPlayer4;
         private System.Windows.Forms.PictureBox pbCurrentCard;
+        private System.Windows.Forms.Label lblCurrentCard;
+        private System.Windows.Forms.PictureBox pbPile;
+        private System.Windows.Forms.Label lblMessage;
     }
 }
