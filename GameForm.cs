@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -8,6 +10,7 @@ namespace ConsoleApp1 {
     public partial class GameForm : Form {
         private string[] compNames = { "Matt", "Nate", "Arthur" };
         private List<Player> players = new List<Player>();
+        private Player currentPlayer;
         private bool gameFinished = false;
 
         //deck is where the player picks up cards, the pile refers to all cards that were placed down (last index is 'flipped up')
@@ -44,9 +47,10 @@ namespace ConsoleApp1 {
             //The game in a do-while loop, ends when there is no more cards in the current player's hand
             do {
                 foreach (Player currentPlayer in players) {
+                    this.currentPlayer = currentPlayer;
+
                     Card currentCard = Pile.Last();
-                    pbCurrentCard.Image = (System.Drawing.Image) Properties.Resources.ResourceManager
-                        .GetObject(currentCard.GetImageFile());
+                    pbCurrentCard.Image = currentCard.GetImageFile();
 
                     if (Deck.Count == 8) {
                         lblMessage.Text = "Shuffling...";
@@ -80,6 +84,7 @@ namespace ConsoleApp1 {
                     //pile.Last() is the 'flipped up' card, where the player needs to match a suit or rank with it (or place a wild card
                     lblMessage.Text = $"\nIt's {currentPlayer.Name}'s turn. {(wildSuit != null ? $" (Follow suit: {wildSuit})" : "")}";
 
+                    LoadCards(currentPlayer);
                     Thread.Sleep(1000);
 
                     //Go to the overriden ThrowDown method within either Human.cs or Computer.cs and pass the current card object
@@ -117,6 +122,10 @@ namespace ConsoleApp1 {
             Pile.Add(Deck.First());
             Deck.RemoveAt(0);
 
+            foreach(Player player in players) {
+                LoadCards(player);
+            }
+
         }
 
         //This method shuffles the deck using the Random class
@@ -145,11 +154,72 @@ namespace ConsoleApp1 {
         }
 
         private void LoadCards(Player player) {
-            if(player is Human) {
-                
-            }else if(player is Computer) {
+            List<PictureBox> pics = new List<PictureBox>();
+            if (player is Human) {
+                int x = 0;
+                foreach (Card c in ((Human)player).Hand) {
+                    PictureBox pb = new PictureBox {
+                        Tag = c,
+                        Image = c.GetImageFile(),
+                        SizeMode = PictureBoxSizeMode.StretchImage,
+                        Width = 80,
+                        Height = 120,
+                    };
 
+                    pb.Click += new EventHandler(PictureBoxClicked);
+
+                    pics.Add(pb);
+                }
+
+                x = 20 * (player.GetNumberInHand() - 1);
+
+                for (int i = pics.Capacity - 1; i >= 0; i--) {
+                    pics[i].Left = x;
+                    gxPlayer1.Controls.Add(pics[i]);
+
+                    x -= 20;
+                }
             }
+            /*
+            else if (player is Computer) {
+                int y = 0;
+
+                Image image = Card.GetBlueBack();
+                image.RotateFlip(RotateFlipType.Rotate180FlipNone);
+
+                for (int i = 0; i < player.GetNumberInHand(); i++) {
+
+                    PictureBox pb = new PictureBox {
+                        Image = image,
+                        SizeMode = PictureBoxSizeMode.StretchImage,
+                        Width = 90,
+                        Height = 140,
+
+                    };
+
+
+                    pb.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                    pb.Refresh();
+                    pics.Add(pb);
+
+                }
+                             
+
+                foreach(PictureBox pb in pics){
+                    pb.Top = y;
+                    gxPlayer3.Controls.Add(pb);
+                    y += 15;
+                }
+            }
+            */
+        }
+
+        private void PictureBoxClicked(object sender, EventArgs e) {
+            PictureBox pb =  (PictureBox) sender;
+            Card card = (Card) pb.Tag;
+
+            Debug.WriteLine(card);
+            //currentPlayer.ThrowDown((Card) pb.Tag);
         }
     }
 }

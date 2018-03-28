@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -6,6 +7,10 @@ namespace ConsoleApp1
 {
     class Human : Player{
         private Card refCard;
+
+        public List<Card> Hand {
+            get => hand;
+        }
 
         public Human(string name, GroupBox gbx) : base(name, gbx) { }
 

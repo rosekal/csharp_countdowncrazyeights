@@ -38,6 +38,10 @@ namespace ConsoleApp1{
             return (Image) Properties.Resources.ResourceManager.GetObject($"{(RankID <= 10 ? "_" : "") + this.Rank}_{this.Suit}");
         }
 
+        public static Image GetBlueBack() {
+            return (Image)Properties.Resources.ResourceManager.GetObject("blue_back");
+        }
+
         public override string ToString() {
             return $"{this.Rank} of {this.Suit}";
         }

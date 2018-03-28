@@ -37,34 +37,35 @@
             // 
             // gxPlayer1
             // 
-            this.gxPlayer1.Location = new System.Drawing.Point(248, 416);
+            this.gxPlayer1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.gxPlayer1.Location = new System.Drawing.Point(307, 488);
             this.gxPlayer1.Name = "gxPlayer1";
-            this.gxPlayer1.Size = new System.Drawing.Size(288, 104);
+            this.gxPlayer1.Size = new System.Drawing.Size(350, 150);
             this.gxPlayer1.TabIndex = 0;
             this.gxPlayer1.TabStop = false;
             // 
             // gxPlayer2
             // 
-            this.gxPlayer2.Location = new System.Drawing.Point(345, 12);
+            this.gxPlayer2.Location = new System.Drawing.Point(307, 12);
             this.gxPlayer2.Name = "gxPlayer2";
-            this.gxPlayer2.Size = new System.Drawing.Size(148, 117);
+            this.gxPlayer2.Size = new System.Drawing.Size(350, 150);
             this.gxPlayer2.TabIndex = 1;
             this.gxPlayer2.TabStop = false;
             // 
             // gxPlayer3
             // 
-            this.gxPlayer3.Location = new System.Drawing.Point(32, 215);
+            this.gxPlayer3.Location = new System.Drawing.Point(12, 151);
             this.gxPlayer3.Name = "gxPlayer3";
-            this.gxPlayer3.Size = new System.Drawing.Size(148, 117);
+            this.gxPlayer3.Size = new System.Drawing.Size(150, 350);
             this.gxPlayer3.TabIndex = 2;
             this.gxPlayer3.TabStop = false;
             this.gxPlayer3.Visible = false;
             // 
             // gxPlayer4
             // 
-            this.gxPlayer4.Location = new System.Drawing.Point(578, 215);
+            this.gxPlayer4.Location = new System.Drawing.Point(765, 151);
             this.gxPlayer4.Name = "gxPlayer4";
-            this.gxPlayer4.Size = new System.Drawing.Size(148, 117);
+            this.gxPlayer4.Size = new System.Drawing.Size(150, 350);
             this.gxPlayer4.TabIndex = 2;
             this.gxPlayer4.TabStop = false;
             this.gxPlayer4.Visible = false;
@@ -72,7 +73,7 @@
             // lblCurrentCard
             // 
             this.lblCurrentCard.AutoSize = true;
-            this.lblCurrentCard.Location = new System.Drawing.Point(260, 220);
+            this.lblCurrentCard.Location = new System.Drawing.Point(304, 261);
             this.lblCurrentCard.Name = "lblCurrentCard";
             this.lblCurrentCard.Size = new System.Drawing.Size(68, 13);
             this.lblCurrentCard.TabIndex = 4;
@@ -80,7 +81,7 @@
             // 
             // pbCurrentCard
             // 
-            this.pbCurrentCard.Location = new System.Drawing.Point(248, 236);
+            this.pbCurrentCard.Location = new System.Drawing.Point(293, 277);
             this.pbCurrentCard.Name = "pbCurrentCard";
             this.pbCurrentCard.Size = new System.Drawing.Size(102, 156);
             this.pbCurrentCard.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -90,7 +91,7 @@
             // pbPile
             // 
             this.pbPile.Image = global::ConsoleApp1.Properties.Resources.blue_back;
-            this.pbPile.Location = new System.Drawing.Point(434, 236);
+            this.pbPile.Location = new System.Drawing.Point(555, 277);
             this.pbPile.Name = "pbPile";
             this.pbPile.Size = new System.Drawing.Size(102, 156);
             this.pbPile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -100,7 +101,7 @@
             // lblMessage
             // 
             this.lblMessage.AutoSize = true;
-            this.lblMessage.Location = new System.Drawing.Point(374, 151);
+            this.lblMessage.Location = new System.Drawing.Point(451, 193);
             this.lblMessage.Name = "lblMessage";
             this.lblMessage.Size = new System.Drawing.Size(35, 13);
             this.lblMessage.TabIndex = 6;
@@ -110,7 +111,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(758, 532);
+            this.ClientSize = new System.Drawing.Size(927, 650);
             this.Controls.Add(this.lblMessage);
             this.Controls.Add(this.pbPile);
             this.Controls.Add(this.lblCurrentCard);
