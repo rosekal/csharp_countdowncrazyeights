@@ -34,7 +34,7 @@ namespace ConsoleApp1{
         }
 
         //Checking if the player can go by comparing all cards in hand with the flipped up card
-        protected bool CanGo(Card current) {
+        public bool CanGo(Card current) {
             foreach(Card card in hand) {
                 if (String.Equals(card.Rank, current.Rank) || String.Equals(card.Suit, current.Suit) || String.Equals(card.Rank, "" + wild))
                     return true;
@@ -44,7 +44,7 @@ namespace ConsoleApp1{
         }
 
         //Since human and computer play differently, an abstract method is needed.
-        public abstract string ThrowDown(Card currentCard);
         public abstract string ThrowDown(Card currentCard, string wildSuit);
+
     }
 }

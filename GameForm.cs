@@ -11,6 +11,7 @@ namespace ConsoleApp1 {
         private string[] compNames = { "Matt", "Nate", "Arthur" };
         private List<Player> players = new List<Player>();
         private Player currentPlayer;
+        private Card currentCard;
         private bool gameFinished = false;
 
         //deck is where the player picks up cards, the pile refers to all cards that were placed down (last index is 'flipped up')
@@ -40,69 +41,59 @@ namespace ConsoleApp1 {
 
             SetUp(name, numOfPlayers);
 
+            StartGame();
+        }
+
+        private void StartGame() {
             int twosMultiplier = 1;
             bool firstRound = true, jack = false;
             string wildSuit = null;
 
-            //The game in a do-while loop, ends when there is no more cards in the current player's hand
-            do {
-                foreach (Player currentPlayer in players) {
-                    this.currentPlayer = currentPlayer;
 
-                    Card currentCard = Pile.Last();
-                    pbCurrentCard.Image = currentCard.GetImageFile();
+            currentCard = Pile.Last();
+                  
 
-                    if (Deck.Count == 8) {
-                        lblMessage.Text = "Shuffling...";
-                        Deck = Pile.ToList();
-                        Shuffle();
-                    }
+            pbCurrentCard.Image = currentCard.GetImageFile();
 
-                    //If it's the first round, don't check the special conditions.
-                    if (!firstRound) {
-                        //If previous person throws down a rank of 2, the next person has to pick up.  Sequential 2's will increment the pick up by 2 
-                        if (currentCard.RankID == 2)
-                            currentPlayer.PickUp(2 * twosMultiplier++);
-                        else
-                            twosMultiplier = 1;
+            if (Deck.Count == 8) {
+                lblMessage.Text = "Shuffling...";
+                Deck = Pile.ToList();
+                Shuffle();
+            }
 
-                        if (currentCard.RankID == 11 && !jack) {
-                            lblMessage.Text = $"{currentPlayer.Name} has missed their turn.";
-                            jack = true;
-                            continue;
-                        }
-                        else
-                            jack = false;
+            //If it's the first round, don't check the special conditions.
+            if (!firstRound) {
+                RefreshCards(currentPlayer);
+                //If previous person throws down a rank of 2, the next person has to pick up.  Sequential 2's will increment the pick up by 2 
+                if (currentCard.RankID == 2)
+                    currentPlayer.PickUp(2 * twosMultiplier++);
+                else
+                    twosMultiplier = 1;
 
-                        if (currentCard.RankID == 12 && String.Equals(currentCard.Suit, "Spades"))
-                            currentPlayer.PickUp(5);
-
-                    }
-                    else
-                        firstRound = false;
-
-                    //pile.Last() is the 'flipped up' card, where the player needs to match a suit or rank with it (or place a wild card
-                    lblMessage.Text = $"\nIt's {currentPlayer.Name}'s turn. {(wildSuit != null ? $" (Follow suit: {wildSuit})" : "")}";
-
-                    LoadCards(currentPlayer);
-                    Thread.Sleep(1000);
-
-                    //Go to the overriden ThrowDown method within either Human.cs or Computer.cs and pass the current card object
-                    //If the previous card wasn't a wild suit (ThrowDown returns a string if true), pass the literal card values.
-                    if (wildSuit == null)
-                        wildSuit = currentPlayer.ThrowDown(currentCard);
-                    else
-                        wildSuit = currentPlayer.ThrowDown(currentCard, wildSuit);
-
-                    if (currentPlayer.GetNumberInHand() == 0) {
-                        gameFinished = true;
-                        lblMessage.Text = $"And the game is over! {currentPlayer.Name} is the winner!";
-                        break;
-                    }
+                if (currentCard.RankID == 11 && !jack) {
+                    lblMessage.Text = $"{currentPlayer.Name} has missed their turn.";
+                    jack = true;
                 }
-            } while (!gameFinished);
+                else
+                    jack = false;
 
-            Console.ReadLine();
+                if (currentCard.RankID == 12 && String.Equals(currentCard.Suit, "Spades"))
+                    currentPlayer.PickUp(5);
+
+            }
+            else
+                firstRound = false;
+
+            //pile.Last() is the 'flipped up' card, where the player needs to match a suit or rank with it (or place a wild card
+            lblMessage.Text = $"\nIt's {currentPlayer.Name}'s turn. {(wildSuit != null ? $" (Follow suit: {wildSuit})" : "")}";
+
+
+            Thread.Sleep(1000);
+
+            if (currentPlayer.GetNumberInHand() == 0) {
+                gameFinished = true;
+                lblMessage.Text = $"And the game is over! {currentPlayer.Name} is the winner!";
+            }
         }
 
         //This method sets up all the necessary attributes before starting the game
@@ -123,9 +114,9 @@ namespace ConsoleApp1 {
             Deck.RemoveAt(0);
 
             foreach(Player player in players) {
-                LoadCards(player);
+                RefreshCards(player);
             }
-
+            currentPlayer = players[0];
         }
 
         //This method shuffles the deck using the Random class
@@ -153,10 +144,17 @@ namespace ConsoleApp1 {
                 }
         }
 
-        private void LoadCards(Player player) {
+        private void RefreshCards(Player player) {
+            //Removing all existing cards in gbx
+            try {
+                currentPlayer.gbx.Controls.Clear();
+                
+            }catch(Exception e) {
+                Debug.WriteLine("Error|||||||: " + e.Message);
+            }
+
             List<PictureBox> pics = new List<PictureBox>();
             if (player is Human) {
-                int x = 0;
                 foreach (Card c in ((Human)player).Hand) {
                     PictureBox pb = new PictureBox {
                         Tag = c,
@@ -165,22 +163,18 @@ namespace ConsoleApp1 {
                         Width = 80,
                         Height = 120,
                     };
-
                     pb.Click += new EventHandler(PictureBoxClicked);
 
                     pics.Add(pb);
                 }
-
-                x = 20 * (player.GetNumberInHand() - 1);
-
-                for (int i = pics.Capacity - 1; i >= 0; i--) {
-                    pics[i].Left = x;
+                
+                for (int i = pics.Count - 1; i >= 0; i--) {
+                    Debug.WriteLine($"{i} {pics.Capacity}");
+                    pics[i].Left = i*20;
                     gxPlayer1.Controls.Add(pics[i]);
-
-                    x -= 20;
                 }
             }
-            /*
+            
             else if (player is Computer) {
                 int y = 0;
 
@@ -211,15 +205,17 @@ namespace ConsoleApp1 {
                     y += 15;
                 }
             }
-            */
         }
 
         private void PictureBoxClicked(object sender, EventArgs e) {
             PictureBox pb =  (PictureBox) sender;
-            Card card = (Card) pb.Tag;
 
-            Debug.WriteLine(card);
-            //currentPlayer.ThrowDown((Card) pb.Tag);
+            if (((Human)currentPlayer).ThrowDown(currentCard, (Card)pb.Tag)) {
+                currentPlayer.gbx.Controls.Remove(pb);
+                pbCurrentCard.Image = pb.Image;
+                currentCard = (Card) pb.Tag;
+                RefreshCards(currentPlayer);
+            }
         }
     }
 }

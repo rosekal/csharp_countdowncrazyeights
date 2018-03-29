@@ -91,7 +91,7 @@
             this.btnPlay.TabIndex = 4;
             this.btnPlay.Text = "Play";
             this.btnPlay.UseVisualStyleBackColor = true;
-            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
+            this.btnPlay.Click += new System.EventHandler(this.BtnPlay_Click);
             // 
             // errorProvider1
             // 
@@ -105,7 +105,7 @@
             this.btnHowToPlay.TabIndex = 5;
             this.btnHowToPlay.Text = "How To Play";
             this.btnHowToPlay.UseVisualStyleBackColor = true;
-            this.btnHowToPlay.Click += new System.EventHandler(this.btnHowToPlay_Click);
+            this.btnHowToPlay.Click += new System.EventHandler(this.BtnHowToPlay_Click);
             // 
             // InitialForm
             // 

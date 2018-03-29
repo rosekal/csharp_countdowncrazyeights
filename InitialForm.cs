@@ -10,7 +10,7 @@ namespace ConsoleApp1 {
             InitializeComponent();
         }
   
-        private void btnPlay_Click(object sender, EventArgs e) {
+        private void BtnPlay_Click(object sender, EventArgs e) {
             if(txtbxName.Text.Length == 0){
                 errorProvider1.SetError(txtbxName, "Please enter a name.");
             }else if(txtbxName.Text.Length > 20) {
@@ -25,7 +25,7 @@ namespace ConsoleApp1 {
             }
         }
 
-        private void btnHowToPlay_Click(object sender, EventArgs e) {
+        private void BtnHowToPlay_Click(object sender, EventArgs e) {
             String howToPlay = "Eight cards are dealt to each player. The remaining cards of the deck are placed " +
                 "face down at the center of the table. The top card is then turned face up to start the game.  " +
                 "Players discard by matching rank or suit with the top card of the discard pile"+

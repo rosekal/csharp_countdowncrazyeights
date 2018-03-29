@@ -10,7 +10,7 @@ namespace ConsoleApp1
         public Computer(string name, GroupBox gbx) : base(name, gbx) { }
 
         //This method makes the computer throw down, if they can.
-        public override string ThrowDown(Card currentCard) {
+        public string ThrowDown(Card currentCard) {
             if (!CanGo(currentCard))
                 PickUp(1);
 
