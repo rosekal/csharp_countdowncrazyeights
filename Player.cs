@@ -24,7 +24,7 @@ namespace ConsoleApp1{
         }
 
         //This method makes the player pick up x amount of cards from the deck
-        public void PickUp(int num) {
+        public void PickUp(int num)  {
             for (int i = 0; i < num; i++) {
                 hand.Add(GameForm.Deck[0]);
                 GameForm.Deck.RemoveAt(0);

@@ -120,7 +120,7 @@ namespace ConsoleApp1 {
         }
 
         //This method shuffles the deck using the Random class
-        public void Shuffle() {
+        public static void Shuffle() {
             Random rng = new Random();
             byte n = (byte)Deck.Count;
 
@@ -148,10 +148,7 @@ namespace ConsoleApp1 {
             //Removing all existing cards in gbx
             try {
                 currentPlayer.gbx.Controls.Clear();
-                
-            }catch(Exception e) {
-                Debug.WriteLine("Error|||||||: " + e.Message);
-            }
+            }catch(Exception) {}
 
             List<PictureBox> pics = new List<PictureBox>();
             if (player is Human) {
@@ -169,40 +166,40 @@ namespace ConsoleApp1 {
                 }
                 
                 for (int i = pics.Count - 1; i >= 0; i--) {
-                    Debug.WriteLine($"{i} {pics.Capacity}");
                     pics[i].Left = i*20;
-                    gxPlayer1.Controls.Add(pics[i]);
+                    player.gbx.Controls.Add(pics[i]);
                 }
             }
             
             else if (player is Computer) {
-                int y = 0;
 
                 Image image = Card.GetBlueBack();
-                image.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                bool isPlayer2 = players.IndexOf(player) == 1;
+
+                if (!isPlayer2) 
+                    image.RotateFlip(RotateFlipType.Rotate90FlipNone);
 
                 for (int i = 0; i < player.GetNumberInHand(); i++) {
-
                     PictureBox pb = new PictureBox {
                         Image = image,
                         SizeMode = PictureBoxSizeMode.StretchImage,
-                        Width = 90,
-                        Height = 140,
+                        Width = (isPlayer2 ? 90 : 140),
+                        Height = (isPlayer2 ? 140 : 90),
 
                     };
-
-
-                    pb.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
                     pb.Refresh();
                     pics.Add(pb);
 
                 }
-                             
 
-                foreach(PictureBox pb in pics){
-                    pb.Top = y;
-                    gxPlayer3.Controls.Add(pb);
-                    y += 15;
+                for (int i = pics.Count - 1; i >= 0; i--) {
+                    if (!isPlayer2) 
+                        pics[i].Top = i * 20;
+                    
+                    else
+                        pics[i].Left = i * 20;
+
+                    player.gbx.Controls.Add(pics[i]);
                 }
             }
         }

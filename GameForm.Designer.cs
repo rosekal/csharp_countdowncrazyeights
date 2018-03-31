@@ -37,7 +37,6 @@
             // 
             // gxPlayer1
             // 
-            this.gxPlayer1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.gxPlayer1.Location = new System.Drawing.Point(307, 488);
             this.gxPlayer1.Name = "gxPlayer1";
             this.gxPlayer1.Size = new System.Drawing.Size(350, 150);
@@ -54,7 +53,7 @@
             // 
             // gxPlayer3
             // 
-            this.gxPlayer3.Location = new System.Drawing.Point(12, 151);
+            this.gxPlayer3.Location = new System.Drawing.Point(27, 151);
             this.gxPlayer3.Name = "gxPlayer3";
             this.gxPlayer3.Size = new System.Drawing.Size(150, 350);
             this.gxPlayer3.TabIndex = 2;

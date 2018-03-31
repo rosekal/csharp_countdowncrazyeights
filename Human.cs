@@ -6,8 +6,6 @@ using System.Windows.Forms;
 namespace ConsoleApp1
 {
     class Human : Player{
-        private Card refCard;
-
         public List<Card> Hand {
             get => hand;
         }
