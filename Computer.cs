@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace ConsoleApp1
@@ -8,6 +9,9 @@ namespace ConsoleApp1
         private Card refCard;
 
         public Computer(string name, GroupBox gbx) : base(name, gbx) { }
+        public List<Card> Hand {
+            get => hand;
+        }
 
         //This method makes the computer throw down, if they can.
         public string ThrowDown(Card currentCard) {

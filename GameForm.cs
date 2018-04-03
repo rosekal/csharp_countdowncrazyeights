@@ -41,29 +41,27 @@ namespace ConsoleApp1 {
 
             SetUp(name, numOfPlayers);
 
-            StartGame();
+            StartRound();
         }
 
-        private void StartGame() {
+        private void StartRound() {
             int twosMultiplier = 1;
             bool firstRound = true, jack = false;
             string wildSuit = null;
 
-
             currentCard = Pile.Last();
-                  
 
             pbCurrentCard.Image = currentCard.GetImageFile();
+            pbCurrentCard.Refresh();
 
             if (Deck.Count == 8) {
-                lblMessage.Text = "Shuffling...";
+                UpdateMessage("Shuffling...");
                 Deck = Pile.ToList();
                 Shuffle();
             }
 
-            //If it's the first round, don't check the special conditions.
+            //If it's not the first round, check if current card has wildcards properties
             if (!firstRound) {
-                RefreshCards(currentPlayer);
                 //If previous person throws down a rank of 2, the next person has to pick up.  Sequential 2's will increment the pick up by 2 
                 if (currentCard.RankID == 2)
                     currentPlayer.PickUp(2 * twosMultiplier++);
@@ -71,7 +69,7 @@ namespace ConsoleApp1 {
                     twosMultiplier = 1;
 
                 if (currentCard.RankID == 11 && !jack) {
-                    lblMessage.Text = $"{currentPlayer.Name} has missed their turn.";
+                    UpdateMessage($"{currentPlayer.Name} has missed their turn.");
                     jack = true;
                 }
                 else
@@ -81,19 +79,38 @@ namespace ConsoleApp1 {
                     currentPlayer.PickUp(5);
 
             }
-            else
-                firstRound = false;
+
+            RefreshCards(currentPlayer);
 
             //pile.Last() is the 'flipped up' card, where the player needs to match a suit or rank with it (or place a wild card
-            lblMessage.Text = $"\nIt's {currentPlayer.Name}'s turn. {(wildSuit != null ? $" (Follow suit: {wildSuit})" : "")}";
-
+            UpdateMessage($"\nIt's {currentPlayer.Name}'s turn. {(wildSuit != null ? $" (Follow suit: {wildSuit})" : "")}");
 
             Thread.Sleep(1000);
 
+            if (currentPlayer is Human human) {
+                if (!human.CanGo(currentCard)) {
+                    human.PickUp(1);
+
+                    if (!human.CanGo(currentCard))
+                        AdvanceToNextPlayer();
+                }
+            }
+
+            if (currentPlayer is Computer comp) 
+                comp.ThrowDown(currentCard);
+            
+
             if (currentPlayer.GetNumberInHand() == 0) {
                 gameFinished = true;
-                lblMessage.Text = $"And the game is over! {currentPlayer.Name} is the winner!";
+                UpdateMessage($"And the game is over! {currentPlayer.Name} is the winner!");
             }
+
+            if (currentPlayer is Computer) {
+                RefreshCards(currentPlayer);
+                AdvanceToNextPlayer();
+            }
+
+            firstRound = false;
         }
 
         //This method sets up all the necessary attributes before starting the game
@@ -120,7 +137,7 @@ namespace ConsoleApp1 {
         }
 
         //This method shuffles the deck using the Random class
-        public static void Shuffle() {
+        public void Shuffle() {
             Random rng = new Random();
             byte n = (byte)Deck.Count;
 
@@ -187,7 +204,6 @@ namespace ConsoleApp1 {
                         Height = (isPlayer2 ? 140 : 90),
 
                     };
-                    pb.Refresh();
                     pics.Add(pb);
 
                 }
@@ -202,6 +218,8 @@ namespace ConsoleApp1 {
                     player.gbx.Controls.Add(pics[i]);
                 }
             }
+
+            player.gbx.Refresh();
         }
 
         private void PictureBoxClicked(object sender, EventArgs e) {
@@ -212,7 +230,19 @@ namespace ConsoleApp1 {
                 pbCurrentCard.Image = pb.Image;
                 currentCard = (Card) pb.Tag;
                 RefreshCards(currentPlayer);
+                AdvanceToNextPlayer();
             }
+        }
+
+        private void AdvanceToNextPlayer() {
+            int nextPlayerIndex = players.IndexOf(currentPlayer) + 1;
+            currentPlayer = players[(nextPlayerIndex >= players.Count ? 0 : nextPlayerIndex)];
+            StartRound();
+        }
+
+        private void UpdateMessage(string message) {
+            lblMessage.Text = message;
+            lblMessage.Refresh();
         }
     }
 }
